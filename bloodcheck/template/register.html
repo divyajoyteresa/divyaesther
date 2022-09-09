@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dependent Dropdown in Django</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container"> <p><h1>Python Django Dependent Chained Dropdown List - Dynamic Dependent Select Box using jQuery Ajax</h1></p>
+    <div class="card">
+        <div class="card-header">
+            Member Form
+        </div>
+        <div class="card-body">
+<form  method="POST" enctype="multipart/form-data" id="UserProfileForm" data-cities-url="{% url 'ajax_load_cities' %}">
+    {% csrf_token %}
+    <table>
+      {{form1.as_table}}
+      {{form2.as_table}}
+    </table>
+    <input type="submit" class="btn btn-outline-primary btn-sm" value="Register">
+  </form>
+             </div>
+      </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_district").change(function () {
+        const url = $("#UserProfileForm").attr("data-cities-url");  // get the url of the `load_cities` view
+        const districtId = $(this).val();  // get the selected country ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+            data: {
+                'district_id': districtId       // add the country id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                $("#id_city").html(data);
+     }
+        });
+
+    });
+</script>
+</body>
+</html>
